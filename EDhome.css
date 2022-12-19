@@ -1,0 +1,130 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-family);
+}
+
+body{
+    margin:0;
+}
+
+.fullscreen{
+    width:100%;
+    height:100%;
+    position:fixed;
+    background-image: url("https://i.ibb.co/6HCg2w3/homepic.jpghttps://i.ibb.co/6HCg2w3/homepic.jpg");
+    background-position: center center;
+    background-size: 100% 100%;
+}
+
+.top-header{
+    width: 100%;
+    height: 80px;    
+}
+
+.top-header .top-nav{
+    display: flex;
+    height: 36px;
+    justify-content: flex-end;
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    align-content: center;
+}
+.header {
+  height:80px;
+  position: relative;
+  background-image:url("https://i.ibb.co/Lk46dZV/background.jpg");
+  background-repeat:no-repeat;
+  background-size: cover;
+  padding: 15px;
+  display:flex;
+
+}
+.user img{
+  width:40px;
+  height:40px;
+  margin: 0 auto;
+  position: absolute;
+  float: right;
+  bottom:25px;
+  right:30px;
+}
+.user p{
+  
+  font-weight: bold;
+  text-shadow: 3px 2px 2px gray;
+  font-family: Arial;
+  font-size: 20px;
+  color: white;
+  position: absolute;
+  right:32px;
+  bottom: 7px;
+  text-align: center;
+}
+
+
+.top-header .top-nav ul li{
+    margin-right: 18px;
+    height: 36px;
+}
+
+.top-header .top-nav ul li a{
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    line-height: 36px;
+    width: 36px;
+    color:var(   --gray-color)
+}
+.top-header .top-nav ul li a:hover{
+    text-decoration:underline
+}
+.top-header .top-nav .profile_img_wrap img{
+    width:36px;
+    height:36px;
+    border-radius: 18px;
+}
+
+.main-section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile_img_wrap {
+}
+
+.main-section .btm_image {
+    padding-top: 5px;
+    background: url("https://i.ibb.co/yqtKGrv/symbol-mark-2.png") no-repeat;
+    background-size: cover;
+    border: 0;
+    width: 100px;
+    height: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 70px;
+    border-radius: 40px;
+    font-size: 20px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.btm_image{
+    text-align:center;
+    display: inline-block;
+}
+
+h1 {
+	font-weight: bold;
+  	text-shadow: 6px 4px 4px gray;
+  	text-align:center;
+	font-family: Arial;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+  	font-size: 150px;
+	color: white;
+}

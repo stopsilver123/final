@@ -1,0 +1,202 @@
+* {
+  box-sizing:border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: Arial;
+}
+
+/* Header */
+.header {
+	height:80px;
+	position: relative;
+  	background-image:url("https://i.ibb.co/Lk46dZV/background.jpg");
+ 	background-repeat:no-repeat;
+ 	background-size: cover;
+	padding: 15px;
+	display:flex;
+}
+.user img{
+	width:40px;
+	height:40px;
+	margin: 0 auto;
+	position: absolute;
+	float: right;
+	bottom:25px;
+	right:30px;
+}
+.user p{
+	
+	font-weight: bold;
+  	text-shadow: 3px 2px 2px gray;
+  	font-family: Arial;
+	font-size: 20px;
+	color: white;
+	position: absolute;
+	right:32px;
+	bottom: 7px;
+	text-align: center;
+}
+
+header h1 {
+	font-weight: bold;
+  	text-shadow: 6px 4px 4px gray;
+  	text-align:center;
+	font-family: Arial;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+  	font-size: 40px;
+	color: white;
+}
+
+
+/* Style the top navigation bar */
+.topnav {
+  overflow:hidden;
+  background-color:#BDBDBD;
+  position:relative;
+}
+
+/* Style the topnav links */
+.topnav li a {
+  float: left;
+  display: block;
+  color:black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav li a:hover {
+  background-color: #ddd;
+  color:  #f2f2f2;
+}
+
+.navtext {
+  text-align:center; 
+  vertical-align:middle;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 400px) {
+  nav a {
+    float: none;
+    width: 100%;
+  }
+}
+
+.column {
+  float: left;
+  padding: 10px;
+}
+
+tr {
+  height: 100px;
+}
+
+th {
+  background-color:rgb(188, 210, 192);
+  width:200px;
+}
+
+td textarea{
+  display:block; 
+  margin: 0 auto; 
+  width:90%; 
+  height:60px; 
+  background-color:rgb(214, 214,214);
+}
+
+
+#flowerfortable {
+  width:35px; 
+  height:35px; 
+  position: relative;
+  text-align: center; 
+  vertical-align:middle;
+}
+
+#foodname, #price, #allergy, #foodhash  {
+  display:block; 
+  margin: 0 auto; 
+  width:90%;
+  height:30px;
+}
+
+.button{
+  position: relative;
+  float: right;
+}
+
+#reg, #cancel {
+  background-color: rgb(91, 117, 94);
+  border: none;
+  color: white;
+  font-size: 15px;
+  width: 100px;
+  padding:5px 30px;
+  margin: auto;
+  cursor:pointer;
+}
+
+#reg:hover, #cancel:hover {
+  background-color:rgb(188, 210, 192);
+}
+
+
+#review, #desc, #extra {
+  height:80px;
+}
+
+
+/*리뷰 별점 css*/
+form fieldset{
+    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    direction: rtl; /* 이모지 순서 반전 */
+    border: 0; /* 필드셋 테두리 제거 */
+}
+form fieldset input[type=radio]{
+    display: none; /* 라디오박스 감춤 */
+}
+form fieldset label{
+    font-size: 2em; /* 이모지 크기 */
+    color: transparent; /* 기존 이모지 컬러 제거 */
+    text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
+}
+form fieldset label:hover{
+    text-shadow: 0 0 0 rgb(253, 216, 6); /* 마우스 호버 */
+}
+form fieldset label:hover ~ label{
+    text-shadow: 0 0 0 rgb(253, 216, 6); /* 마우스 호버 뒤에오는 이모지들 */
+}
+form fieldset input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgb(253, 216, 6); /* 마우스 클릭 체크 */
+}
+
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column.side {
+  width:25%;
+}
+
+.column.middle {
+  width:50%;
+}
+
+@media screen and (max-width: 600px) {
+  .column.side, .column.middle {
+    width:100%;
+  }
+}

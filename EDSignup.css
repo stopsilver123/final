@@ -1,0 +1,163 @@
+* {
+  box-sizing:border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: Arial;
+}
+
+/* Header */
+.header {
+	height:80px;
+	position: relative;
+  	background-image:url("https://i.ibb.co/Lk46dZV/background.jpg");
+ 	background-repeat:no-repeat;
+ 	background-size: cover;
+	padding: 15px;
+	display:flex;
+}
+.user img{
+	width:40px;
+	height:40px;
+	margin: 0 auto;
+	position: absolute;
+	float: right;
+	bottom:25px;
+	right:30px;
+}
+.user p{
+	
+	font-weight: bold;
+  	text-shadow: 3px 2px 2px gray;
+  	font-family: Arial;
+	font-size: 20px;
+	color: white;
+	position: absolute;
+	right:32px;
+	bottom: 7px;
+	text-align: center;
+}
+
+header h1 {
+	font-weight: bold;
+  	text-shadow: 6px 4px 4px gray;
+  	text-align:center;
+	font-family: Arial;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+  	font-size: 40px;
+	color: white;
+}
+
+
+/* Style the top navigation bar */
+.topnav {
+  overflow:hidden;
+  background-color:#BDBDBD;
+  position:relative;
+}
+
+/* Style the topnav links */
+.topnav li a {
+  float: left;
+  display: block;
+  color:black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav li a:hover {
+  background-color: #ddd;
+  color:  #f2f2f2;
+}
+
+.navtext {
+  text-align:center; 
+  vertical-align:middle;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 400px) {
+  nav a {
+    float: none;
+    width: 100%;
+  }
+}
+
+table
+{
+  width: 50%;
+  margin: auto;
+  table-layout: fixed;
+
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+  float: left;
+  padding: 10px;
+}
+
+th 
+{
+   background-color:rgb(188, 210, 192);
+   text-align: center;
+   width: 200px;
+   vertical-align: middle;
+}
+
+tr{
+  height: 100px;
+}
+
+td{
+  padding: 25px;
+
+}
+
+
+#flowerfortable {
+  width:35px; 
+  height:35px; 
+  position: relative;
+  text-align: center; 
+  vertical-align:middle;
+}
+
+#reg {
+  background-color: rgb(91, 117, 94);
+  border: none;
+  color: white;
+  font-size: 13px;
+  width: 100px;
+  padding:5px 20px;
+  margin: auto;
+ 
+}
+
+.column.side {
+  width: 25%;
+}
+
+.column.middle {
+  width: 50%;
+}
+
+@media screen and (max-width: 600px) {
+  .column.side, .column.middle {
+    width:100%;
+  }
+}
