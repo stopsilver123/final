@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>EATing Day</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/EDLogin.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <style> body{font-family:'Jua', sans-serif;} </style>
+</head>
+<body>
+<header>
+    <div class="header">
+        <div class="title">
+            <h1>EATing Day</h1>
+        </div>
+        {% if session['id']%}
+        <div class="user">
+            <img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0">
+            <p>{{session['id']}}</p>
+        </div>
+            {% else%}
+        <div class="user">
+            <a href="/EDLogin"><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0"></a>
+        </div>
+        {% endif %}
+    </div>
+</header>
+<nav>
+    <div class="topnav">
+        <ul style="list-style-type:none;">
+            <li><a href="/EDhome"><i class="fa-solid fa-house fa-lg"></i></a></li>
+            <li><a href="/EDlist"><i class="fa-solid fa-list fa-lg"></i></a></li>
+            <li><a href="/EDonepick"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            <li><a href="/EDRegister"><i class="fa-solid fa-plus fa-lg"></i></a></li>
+        </ul>
+        <div class="navtext"><i class="fa-solid fa-plus fa-lg"></i>&nbsp&nbsp<span style="font-size: 1.5em;"><b>로그인</b></span></div>
+    </div>
+</nav>
+{% block section%}
+<div class="login-wrapper" >
+        <h2>Login</h2>
+    {% with mesg = get_flashed_messages() %}
+    {% if mesg !=[] %}
+        <script>alert("{{ mesg[0]}}")</script>
+    {% endif %}
+    {% endwith %}
+        <form method="post" action="/login_confirm" id="login-form">
+            <input type="text" name="id" placeholder="userID">
+            <input type="password" name="pw" placeholder="Password">
+            <input type="submit" value="Login">
+
+        </form>
+    <div class="line">
+            <hr>
+        </div>
+        <a href="/EDSignup">회원가입 하시겠습니까?</a>
+    </div>
+    {% endblock section %}
+</body>
+</html>

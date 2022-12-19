@@ -1,0 +1,10 @@
+{% extends "EDdetail.html" %}
+{% block section %}
+<div style="float:left;">
+    <img id ="heartIconOff" src = "https://cdn-icons-png.flaticon.com/512/535/535285.png" style="width:40px; display :inline-block;">
+</div>
+<div style="float: right;">
+    <button type="button" id="heartButtonOn" onclick = "document.getElementById('heartIconOff').src='https://cdn-icons-png.flaticon.com/512/833/833472.png'" style="display :inline-block;">찜하기</button>
+    <button type="button" id="heartButtonOff" onclick = "document.getElementById('heartIconOff').src='https://cdn-icons-png.flaticon.com/512/535/535285.png'" style="display :inline-block;">찜 취소</button>
+</div>
+{% endblock section %}

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/EDhome.css') }}">
+    <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    
+    
+    <title>EATing Day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <style> *{font-family:'Jua', sans-serif;} </style>
+</head>
+<body>
+<div class="fullscreen">
+    <style> .fullscreen {background-image: url('https://i.ibb.co/6HCg2w3/homepic.jpghttps://i.ibb.co/6HCg2w3/homepic.jpg');
+        background-position: center center; background-size: 100% 100%; width:100%; height:100%; position:fixed;}
+    </style>
+    <header class="top-header">
+        <br><br><br><br><br>
+        <h1>EATing DAY</h1>
+        <nav class="top-nav">
+        {% if session['id'] %}
+        <div class="user">      
+           <img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0"><br><br> <p>{{session['id']}} &emsp; &emsp;</p>
+        </div>
+
+        {% else%}
+        <div class="user">
+            <a href="/EDLogin"><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0"></a>
+        </div>
+        {% endif %}
+        </nav>
+    </header>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <section class="main-section">
+        <button type="button" onclick="location.href='/EDlist'" class="btm_image" id="img_byn1"><img src="https://cdn-icons-png.flaticon.com/512/151/151917.png" height="90" width="80"/> <span style="color:white;">리스트</span></button><br>
+        {% if session['id'] %}
+        <button type="button" onclick="location.href='/EDonepick/{{session['id']}}/'" class="btm_image" id="img_byn2"><img src="https://cdn-icons-png.flaticon.com/512/2077/2077502.png" height="90" width="80"/> <span style="color:white;">찜</span></button><br>
+        {% else%}
+        <button type="button" onclick="location.href='/EDonepick'" class="btm_image" id="img_byn2"><img src="https://cdn-icons-png.flaticon.com/512/2077/2077502.png" height="90" width="80"/> <span style="color:black;">찜</span></button><br>
+        {% endif %}
+        <button type="button" onclick="location.href='/EDRegister'" class="btm_image" id="img_byn3"><img src="https://cdn-icons-png.flaticon.com/512/3524/3524388.png" height="90" width="80"/> <span style="color:white;">등록하기</span></button>
+        <button type="button" onclick="location.href='/EDrecommend'" class="btm_image" id="img_byn4"><img src="https://cdn-icons-png.flaticon.com/512/1031/1031688.png" height="90" width="80"/><span style="color:white;">추천</span></button>
+    </section>
+</div>
+</body>
+</html>

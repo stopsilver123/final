@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>EATing Day</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/EDSignup.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+</head>
+<body>
+<header>
+    <div class="header">
+        <div class="title">
+            <h1>EATing Day</h1>
+        </div>
+        {% if session['id']%}
+        <div class="user">
+            <img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0">
+            <p>{{session['id']}}</p>
+        </div>
+            {% else%}
+        <div class="user">
+            <a href="/EDLogin"><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0"></a>
+        </div>
+        {% endif %}
+    </div>
+</header>
+<nav>
+    <div class="topnav">
+        <ul style="list-style-type:none;">
+            <li><a href="/EDhome"><i class="fa-solid fa-house fa-lg"></i></a></li>
+            <li><a href="/EDlist"><i class="fa-solid fa-list fa-lg"></i></a></li>
+            <li><a href="/EDonepick"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            <li><a href="/EDRegister"><i class="fa-solid fa-plus fa-lg"></i></a></li>
+        </ul>
+        <div class="navtext"><i class="fa-solid fa-plus fa-lg"></i>&nbsp&nbsp<span style="font-size: 1.5em;"><b>회원가입</b></span></div>
+    </div>
+</nav>
+    
+<div class="row"> 
+    <div class="column side">
+  </div>
+
+  <div class="column middle">  
+   {% block content %}
+     {% with mesg = get_flashed_messages() %}
+        {% if mesg !=[] %}
+            <script>alert("{{ mesg[0] }}")</script>
+        {% endif %}
+        {% endwith %}
+    
+    
+     <form method="post" action="/signup_post">
+         <br><br>
+        <table border="1" style="width:90%">
+            <tr><th><img src="https://i.ibb.co/GQCcV71/flower-deco.png" id="flowerfortable"><label for="nickname"> 닉네임</label></th>
+            <td><input type="text" id="nickname" name="nickname" access="false"></td></tr>
+            <tr><th><span style="color:red;">*&nbsp</span><img alt="flower img" src="https://i.ibb.co/GQCcV71/flower-deco.png" id="flowerfortable"><label for="foodname"> 아이디</label></th>
+            <td><input type="text" id="id" name="id" access="false" required></td></tr>
+                
+            <tr><th><span style="color:red;">*&nbsp</span><img alt="flower img" src="https://i.ibb.co/GQCcV71/flower-deco.png" id="flowerfortable"><label for="password"> 비밀번호</label></th>
+            <td><input type="password" id="pw" name="pw" access="false" required></td></tr>
+         
+         <tr><th><span style="color:red;">*&nbsp</span><img alt="flower img" src="https://i.ibb.co/GQCcV71/flower-deco.png" id="flowerfortable"><label for="passwordcheck"> 비밀번호확인</label></th>
+            <td><input type="password" id="pwcheck" name="pwcheck" access="false" required></td></tr>
+            
+        </table>
+               <br><br><br>
+         
+      
+         
+          <div align="center">
+              <input type="submit" value="가입하기" id='reg'></div>
+            
+            </form>
+         </div>
+
+{% endblock content %}
+    
+    </div>
+
+   
+</body>
+</html>

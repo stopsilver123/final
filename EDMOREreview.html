@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>EATing Day</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/EDMOREreview.css') }}">
+<script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <style> body{font-family:'Jua', sans-serif;} </style>
+</head>
+<body>
+
+<!-- Header-->
+<header>
+	<div class="header">
+		<div class="title">
+			<h1>EATing Day</h1>
+		</div>
+		{% if session['id']%}
+        <div class="user">
+                    
+            <p>{{session['id']}}</p><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0">
+        </div>
+            {% else%}
+        <div class="user">
+            <a href="/EDLogin"><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0"></a>
+        </div>
+        {% endif %}
+	</div>
+	
+</header>
+
+<nav style="all: none;">
+  <div class="topnav"  style="height:49px;">
+        <ul style="list-style-type:none;">
+            <li><a href="/EDhome"><i class="fa-solid fa-house fa-lg"></i></a></li>
+            <li><a href="/EDlist"><i class="fa-solid fa-list fa-lg"></i></a></li>
+            <li><a href="/EDonepick"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            <li><a href="/EDRegister"><i class="fa-solid fa-plus fa-lg"></i></a></li>
+        </ul>
+        <!--각자 맡은 화면 사이트 이름 넣기-->
+ <div class="navtext"><i class="fa-solid fa-list fa-lg"></i>&nbsp&nbsp<span style="font-size: 1.5em;"><b>리뷰 더보기</b></span></div>
+      {% if session['id'] %}
+            <button type="button" onclick="location.href = '/logout'" style="float: right; border-radius:10px">&nbsp로그아웃&nbsp</button>
+            {% endif %}
+  </div>
+  <button type="button" onclick="history.back(-1)" class="btm_more" id="more2" style="float: right;">돌아가기</button>
+</nav>
+
+<br>
+
+<section>
+    {% if total > 0 %}
+    <p>      
+        <button class="button" style = "border-style:groove ;background-color:#ffffff;
+                                        border-color:#F86696; position:relative; left:10px; top:-13px;"> 리뷰 {{total}} 개 {{data2_restaurant_name}} </button> 
+    </p>
+    
+    <div class="list_wrap">
+          {% for data in datas %}
+         <div class='users' style='position:relative; left:285px; top:+10px;'>
+        
+              &nbsp&nbsp&nbsp&nbsp<img src="https://i.ibb.co/PYRCtps/USER.png" style="width:50px; height:50px; ">
+             <span name="writer">&nbsp&nbsp{{data.writer}}</span>
+             <button class="button" style = "border-style:'none';background-color:#ffffff; border-color:#088A29;
+                                                         position:relative; left:-160px; top:+70px; width:100px; height:50px; "><span>{{data.foodname}}</span> </button>
+         </div>
+         
+         
+        <div class="star" style= " position:relative; left:800px; top:-15px">
+            <img src="https://i.ibb.co/c20MscQ/star.png" style="width:20px; height:20px; position:relative; left:0px; top:-22px;">
+            <img src="https://i.ibb.co/c20MscQ/star.png" style="width:20px; height:20px; position:relative; left:-8px; top:-22px;">
+            <img src="https://i.ibb.co/c20MscQ/star.png" style="width:20px; height:20px; position:relative; left:-16px; top:-22px;">
+            <img src="https://i.ibb.co/c20MscQ/star.png" style="width:20px; height:20px; position:relative; left:-24px; top:-22px;">
+            <img src="https://i.ibb.co/Dpg6F1W/none-star.png" style="width:20px; height:20px; position:relative; left:-32px; top:-22px;">
+        </div>
+    
+    
+		<!-- <p style="position:relative; left:50px; top:-65px;"> -->
+<!-- <button class="button" style = "width:50px; position:relative;left:848px; top:-20px; background-color:#ffffff; border-color:#F86696; border-style:dashed; border-width:3px;">♡ 500</button> -->
+
+        <article>
+            <div class="list_wrap">
+                                  
+                <div class="my_box"> 
+                    <img src="/{{data.img_path}}" style="width:500px; height:300px;">
+                    {{data.description}}
+                </div>
+                     
+            </div>
+        </article>
+   
+
+    
+        {% else %}
+        <div class="my_box">
+            <p>{{data2_restaurant_name}}   등록된 리뷰가 없습니다.</p> 
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</section>
+
+<br><br>
+    
+
+  <aside>
+	
+
+	<div class="popular">
+      <h3>BEST REVIEWER</h3><br>
+		<ul>
+		<li>1위:Soo </li>
+		<li>2위 - </li>
+		<li>3위 - </li>
+		<li>4위 - </li>
+		</ul>
+     
+    </div>
+
+<br><br>
+      <div class="review">
+          
+      
+      {% if session['id']%}
+      <form method="post" action="/EDreviewRegister">
+          <input type="hidden" name="restaurant_name2" value="{{data2_restaurant_name}}">
+          
+        
+          <button type="submit" name="reviewregister" class="btm_more" id="more1" 
+                  style="padding: 10px 70px 10px 70px;background-color:#FFE4B5; border-color:#ffffff; 
+                         position:relative; left:100px; top:-60px; ">리뷰쓰기</button>
+      </form> 
+      {% else %}
+      <button onclick="location.href='/EDLogin'" name="reviewregister" class="btm_more" id="more1" 
+                   style="padding: 10px 70px 10px 70px;;background-color:#FFE4B5;
+                       border-color:#ffffff;  position:relative;">리뷰쓰기<br> (로그인 후 가능합니다.)</button>
+      {% endif %}
+      </div>
+  </aside>
+
+</body>
+</html>

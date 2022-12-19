@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>EATing Day</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/EDonepick.css') }}">
+	<script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+</head>
+<body>
+<!-- Header-->
+<header>
+	<div class="header">
+		<div class="title">
+			<h1>EATing Day</h1>
+		</div>
+		{% if session['id']%}
+        <div class="user">
+                    
+            <p>{{session['id']}}</p><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0">
+        </div>
+            {% else%}
+        <div class="user">
+            <a href="/EDLogin"><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0"></a>
+        </div>
+        {% endif %}
+	</div>
+</header>
+<nav>
+	<div class="topnav">
+        <ul style="list-style-type:none;">
+            <li><a href="/EDhome"><i class="fa-solid fa-house fa-lg"></i></a></li>
+            <li><a href="/EDlist"><i class="fa-solid fa-list fa-lg"></i></a></li>
+            {% if session['id']%}
+            <li><a href="/EDonepick/{{session['id']}}/"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            {% else%}
+            <li><a href="/EDonepick"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            {% endif %}
+            <li><a href="/EDRegister"><i class="fa-solid fa-plus fa-lg"></i></a></li>
+        </ul>
+
+        <div class="navtext"><i class="fa-solid fa-heart fa-lg"></i>&nbsp&nbsp<span style="font-size: 1.5em;"><b>맛집 찜 목록</b></span></div>
+        {% if session['id'] %}
+            <button type="button" onclick="location.href = '/logout'" style="float: right; border-radius:10px">&nbsp로그아웃&nbsp</button>
+            {% endif %}
+    </div>
+</nav>
+
+<section style="float: center; width: 80%; margin-left:10%;">
+	<article>
+		<br>
+		<h2>전체 찜 목록</h2>
+		<br><br>
+        {% if session['id']%}
+        {% if total>0 %}
+        <div>
+            <p>찜 목록 -- 현재까지 {{total}}개 등록됨</p>
+        </div>
+        <br>
+        {% for data in datas %}
+		<div class="list_1" style="margin-left:3%;">
+			<img src="/{{data[1].img_path}}" border="0" width="100%" height="100px">
+			
+			<div class="RestaurantName" style="width: 500px;">
+				<p id="resName" style="text-decoration-line:underline">{{data[1].name}}</p>
+
+			</div>
+            <form action="/EDonepick/{{session['id']}}/", method="POST">
+                <input type="hidden" name="heart" value="OFF">
+                <input type="hidden" name="restaurant" value={{data[1].name}}>
+                <button type="submit" id="delete1" class="btm_delete" onclick = "document.getElementById('heartIconOff').src='https://cdn-icons-png.flaticon.com/512/535/535285.png'">삭제</button>   
+            </form>
+				<!--<button type="button" onclick="location.href='#'" class="btm_delete" id="delete1">삭제</button>-->
+		</div>
+        
+		<br><br>
+        {% endfor %}
+        
+        <div>
+        {% else %}
+        <p>찜한 식당 없음</p>
+        {% endif %}
+        {% else%}
+        로그인을 해주세요
+        {% endif %}
+        </div>
+
+        <div class="list_4" style="float:center; margin-left:3%;">
+			<button type="button" onclick="location.href='https://eating-day.run.goorm.io/EDlist'" class="btm_plus" id="plus">+ 맛집 둘러보기</button>
+		</div>
+        <br><br>
+	</article>
+</section>
+
+
+
+</body>
+</html>

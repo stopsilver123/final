@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>EATing Day</title>
+	
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/EDmoreinformation.css') }}">
+	<script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <style> *{font-family:'Jua', sans-serif;} </style>
+    
+</head>
+<body>
+<header>
+	<div class="header">
+		<div class="title">
+			<h1>EATing Day</h1>
+		</div>
+		{% if session['id']%}
+        <div class="user">
+                    
+            <p>{{session['id']}}</p><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0">
+        </div>
+            {% else%}
+        <div class="user">
+            <a href="/EDLogin"><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0"></a>
+        </div>
+        {% endif %}
+	</div>
+</header>
+<nav>
+<div class="topnav">
+	 <ul style="list-style-type:none;">
+           <li><a href="/EDhome"><i class="fa-solid fa-house fa-lg"></i></a></li>
+            <li><a href="/EDlist"><i class="fa-solid fa-list fa-lg"></i></a></li>
+            {% if session['id']%}
+            <li><a href="/EDonepick/{{session['id']}}/"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            {% else%}
+            <li><a href="/EDonepick"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            {% endif %}
+            <li><a href="/EDRegister"><i class="fa-solid fa-plus fa-lg"></i></a></li>
+        </ul>
+
+        <div class="navtext"><i class="fa-solid fa-plus fa-lg"></i><span style="font-size: 1.5em;"><b>맛집 세부화면</b></span></div>
+    {% if session['id'] %}
+            <button type="button" onclick="location.href = '/logout'" style="float: right; border-radius:10px">&nbsp로그아웃&nbsp</button>
+            {% endif %}
+</div>
+</nav>
+<section>
+<article>
+<div class = "column">
+	
+	<button type="button" onclick="history.back(-1)" class="button" style = "font-size:15px; background-color:#C0C0C0; float:left;">돌아가기</button>
+	<div class = "column middle">
+		<div class = "midinf">
+			<div class = "information left">
+				<h2 style="font-size:25px; "><u>{{data.name}}</u></h2><br>
+				
+                <dl>
+					<br><dt><b>*영업시간*</b></dt>
+					<dd>휴무일</dd>
+					<dd>{{data.stime}} ~ {{data.ftime}}</dd><br>
+					<dt><b>*주소*</b></dt>
+					<dd>{{data.postcode}}</dd><br>
+                    <dd>{{data.Addr}}</dd><br>
+                    <dd>{{data.detailAddr}}</dd><br>
+                    <dd>{{data.extraAddr}}</dd><br>
+					<dt><b>*전화번호*</b></dt>
+					<dd>{{data.tel}}</dd><br>
+					<dt><b>*홈페이지*</b></dt>
+					<dd>{{data.site}}</dd><br>
+					<dt><b>*주차*</b></dt>
+					<dd>{{data.park}}</dd><br>
+                    <dt><b>*평균가격대*</b></dt>
+                    <dd>{{data.avgprice}}</dd><br>
+				</dl>
+			</div>
+			<div class = "information right">
+				<dl>
+					<br><br>
+					<br><br><dt><b>*찾아오시는 길*</b></dt>
+					<br>
+                    <dd>아래 이미지를 클릭하세요!</dd><br>
+                    <dd><dd><a target="_blank" href="https://map.kakao.com/link/search/{{data.Addr}}"><img class="mapimage" src="https://i.ibb.co/dWyCQtX/image.png"></a></dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+</article>
+</section>
+</body>
+</html>

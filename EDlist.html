@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>EATing Day</title>
+    {% block head %}
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/EDlist.css') }}">
+    <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js" "{{ url_for('static', filename='js/EDlist.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% endblock head %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <style> nav, button{font-family:'Jua', sans-serif;} </style>
+    
+</head>
+	
+<body>
+    
+<header>
+	<div class="header">
+		<div class="title">
+			<h1>EATing Day</h1>
+		</div>
+		{% if session['id']%}
+        <div class="user" float="right">
+                    
+            <p style="position: absolute; right:55px;">{{session['id']}}</p><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0">
+        </div>
+            {% else%}
+        <div class="user">
+            <a href="/EDLogin"><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0"></a>
+        </div>
+        {% endif %}
+	</div>
+</header>
+
+<nav>
+	<div class="topnav">
+		<ul style="list-style-type:none;">
+  			<li><a href="/EDhome"><i class="fa-solid fa-house fa-lg"></i></a></li>
+            <li><a href="/EDlist"><i class="fa-solid fa-list fa-lg"></i></a></li>
+            {% if session['id']%}
+            <li><a href="/EDonepick/{{session['id']}}/"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            {% else%}
+            <li><a href="/EDonepick"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            {% endif %}
+            <li><a href="/EDRegister"><i class="fa-solid fa-plus fa-lg"></i></a></li>
+		</ul>
+        {% block nav %}
+		        <div class="navtext"><i class="fa-solid fa-list fa-lg"></i>&nbsp&nbsp<span style="font-size: 1.5em;"><b>맛집 리스트</b></span></div>
+        {% endblock nav %}
+        {% if session['id'] %}
+            <button type="button" onclick="location.href = '/logout'" style="float: right; border-radius:10px">&nbsp로그아웃&nbsp</button>
+            {% endif %}
+	</div>
+</nav>
+
+<section>
+    {% block section %}
+    <script>
+        $(document).ready(function(){
+            //alert("{{category}}");
+            $('#category option:contains("{{category}}")').prop("selected", true);
+        });
+        $("#category").css("visibility","hidden");
+    </script>
+    <div>
+       <select id="category" name="category" onchange="location=this.value;" style="display:none;">
+           {% for i in range(page_count) %}
+           <option value="{{url_for('list_restaurants', page=i, category='all')}}">All</option>
+           <option value="{{url_for('list_restaurants', page=i, category='한식')}}">Korean</option>
+           <option value="{{url_for('list_restaurants', page=i, category='중식')}}">Chinese</option>
+           <option value="{{url_for('list_restaurants', page=i, category='일식')}}">Japanese</option>
+           <option value="{{url_for('list_restaurants', page=i, category='양식')}}">Italian</option>
+           <option value="{{url_for('list_restaurants', page=i, category='카페')}}">Cafe</option>
+           <option value="{{url_for('list_restaurants', page=i, category='술')}}">Bar</option>
+           <option value="{{url_for('list_restaurants', page=i, category='기타')}}">Other</option>
+           {% endfor %}
+        </select> 
+    </div>
+    <div align=right>
+        {% if total>0 %}
+    </div>
+	<article>   
+        <div class="list_wrap">
+			<ul>
+                {% for data in datas %}
+				<li class="item">
+					<div class="image">
+                        {% if session['id']%}
+                        <form action="/EDdetail/{{data[1].name}}/{{session['id']}}/" method="POST">
+                              <a href="/EDdetail/{{data[1].name}}/{{session['id']}}/"><img src="{{data[1].img_path}}" border="0" width="100%" height="200px"></a>
+                            <input type="hidden" name="user_name" value="{{session['id']}}">
+                        </form>
+                        {% else%}
+
+                        <a href="/EDdetail_notLogin/{{data[1].name}}/"><img src="{{data[1].img_path}}" border="0" width="100%" height="200px"></a>
+                        {% endif %}
+					</div>
+					<div class="contents">
+						<h5>{{data[1].name}}</h5>
+                        <p>
+                            별점 : {{avg_rate}}
+                        </p>
+                        <p id="JPN">{{data[1].category}}</p><br>
+						<div id="signiture_menu">
+						</div>
+						<p class="keyword">{{data[1].hashtag_category}}</p>
+						<div id="button">
+                        {% if session['id']%}
+                        <form method="POST">
+                            <a href="/EDdetail/{{data[1].name}}/{{session['id']}}/">more</a>
+                            <input type="hidden" name="user_name" value="{{session['id']}}">
+                        </form>
+                        {% else%}
+                            
+                            
+							<a href="/EDdetail_notLogin/{{data[1].name}}/">More</a>
+                         {% endif %}
+						</div>	
+					</div>	
+				</li>
+                {% endfor %}
+			</ul>
+		</div>
+        
+    <div class="page-wrap">
+        <div class="page-nation">
+            <ul>
+                <li>
+                        {% for i in range(page_count) %}
+                         <a href="{{url_for('list_restaurants',page=i, category=category)}}" color="black">{{i+1}}</a>
+                        {% endfor %}
+                </li>
+            </ul>
+        </div>
+        </div>
+        
+        {% else %}
+        <p>
+            등록된 맛집이 없습니다.
+        </p>
+        {% endif %}
+
+	</article>
+    {% endblock section %}
+  </section>
+  <aside>
+    {% block aside %}
+	<div class="dropdown_wrap">
+	<ul>
+		<li class="dropdown">
+			<a href="https://eating-day.run.goorm.io/EDlist" class="dropbtn">Category</a>
+			<div class="dropdown_cont" id="category">
+				<a href="https://eating-day.run.goorm.io/EDlist?page=&category=한식">한식</a>
+				<a href="https://eating-day.run.goorm.io/EDlist?page=&category=중식">중식</a>
+				<a href="https://eating-day.run.goorm.io/EDlist?page=&category=일식">일식</a>
+				<a href="https://eating-day.run.goorm.io/EDlist?page=&category=양식">양식</a>
+				<a href="https://eating-day.run.goorm.io/EDlist?page=&category=카페">카페</a>
+				<a href="https://eating-day.run.goorm.io/EDlist?page=&category=술">주점</a>
+                <a href="https://eating-day.run.goorm.io/EDlist?page=&category=기타">기타</a>
+			</div>
+		</li>
+	</ul>
+	</div>
+    <div class="popular">
+      <h3>맛집 인기 순위</h3><br>
+		<ol>
+		<li><a href="http://eating-day.run.goorm.io/EDdetail/진돈부리/">1위 - 진돈부리</a></li>
+		<li><a href="http://eating-day.run.goorm.io/EDdetail/유야케도쿄/">2위 - 유야케도쿄</a></li>
+		<li><a href="http://eating-day.run.goorm.io/EDdetail/중식당유/">3위 - 중식당 유</a></li>
+		<li><a href="http://eating-day.run.goorm.io/EDdetail/아콘스톨/">4위 - 아콘스톨</a></li>
+		</ol>
+     
+    </div>
+    {% endblock aside %}
+  </aside>
+</body>
+</html>

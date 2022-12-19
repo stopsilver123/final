@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>EATing Day</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/EDrecommend.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/calculator.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="{{ url_for('static', filename='js/EDdetail.js') }}"></script>
+	<script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+</head>
+	
+<body>
+<header>
+	<div class="header">
+		<div class="title">
+			<h1>EATing Day</h1>
+		</div>
+        {% if session['id']%}
+		<div class="user">
+			<p>{{session['id']}}</p><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0">
+		</div>
+            {% else %}
+        <div class="user">
+            <a href="/EDLogin"><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0"></a>
+        </div>
+        {% endif %}
+	</div>
+</header>
+
+<nav>
+	<div class="topnav">
+		<ul style="list-style-type:none;">
+  			<li><a href="/EDhome"><i class="fa-solid fa-house fa-lg"></i></a></li>
+            <li><a href="/EDlist"><i class="fa-solid fa-list fa-lg"></i></a></li>
+            {% if session['id']%}
+            <li><a href="/EDonepick/{{session['id']}}/"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            {% else%}
+            <li><a href="/EDonepick"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            {% endif %}
+            <li><a href="/EDRegister"><i class="fa-solid fa-plus fa-lg"></i></a></li>
+		</ul>
+		        <div class="navtext"><i class="fa-solid fa-list fa-lg"></i>&nbsp&nbsp<span style="font-size: 1.5em;"><b>맛집 추천</b></span></div>
+        {% if session['id'] %}
+            <button type="button" onclick="location.href = '/logout'" style="float: right; border-radius:10px;" >&nbsp로그아웃&nbsp</button>
+            {% endif %}
+	</div>
+</nav>
+
+<section>
+    
+    <script>
+        $(document).ready(function(){
+            //alert("{{category}}");
+            $('#avgprice option:contains("{{avgprice}}")').prop("selected", true);
+        });
+        $("#avgprice").css("visibility","hidden");
+    </script>
+	<article>
+    <div class="calculator">
+        <div class="calculator_image">
+		  <div id="container">
+			  <div>
+				<div style="font-size:60px; font-weight:bold; text-align:right; width:316px; height:100px; padding:10px; background-color:#D1CFC9; border-bottom: 10px solid #596D57">
+				  {{data_cost}}
+                </div>
+
+				<div>
+				  <div class="buttonWrap">
+					<button onclick="reset()" style="background-color: #F0886C;">C</button>
+					<button style="width:206px; background-color:#979191;"></button>
+
+				  </div>
+				  <div class="buttonWrap">
+					<button onclick="addOutput(9)">9</button>
+					<button onclick="addOutput(8)">8</button>
+					<button onclick="addOutput(7)">7</button>
+				  </div>
+				  <div class="buttonWrap">
+					<button onclick="addOutput(6)">6</button>
+					<button onclick="addOutput(5)">5</button>
+					<button onclick="addOutput(4)">4</button>
+				  </div>
+				  <div class="buttonWrap">
+					<button onclick="addOutput(3)">3</button>
+					<button onclick="addOutput(2)">2</button>
+					<button onclick="addOutput(1)">1</button>
+				  </div>
+				  <div class="buttonWrap">
+					<button onclick="addOutput(0)">0</button>
+
+					<button style="width:206px; background-color: #EDC487;" onclick="calculate()">=</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			<script src="calculator.js"></script>
+        </div>
+        </div>
+    
+        <button style="width:100px;">
+            <a href = "/EDrecommend">다시 계산하기</a>
+        </button>
+	</article>
+  </section>
+  <aside>
+      
+    <div class="list_wrap">
+        
+			<ul>
+                {% for data in datas %}
+				<li class="item">
+					<div class="image">
+                     {% if session['id']%}
+                        <form action="/EDdetail/{{data[1].name}}/{{session['id']}}/" method="POST">
+                              <a href="/EDdetail/{{data[1].name}}/{{session['id']}}/"><img src="{{data[1].img_path}}" border="0" width="100%" height="200px"></a>
+                            <input type="hidden" name="user_name" value="{{session['id']}}">
+                        </form>
+                        {% else%}
+
+                        <a href="/EDdetail_notLogin/{{data[1].name}}/"><img src="{{data[1].img_path}}" border="0" width="100%" height="200px"></a>
+                        {% endif %}
+					</div>
+					<div class="contents">
+						<h5>{{data[1].name}}</h5>s
+                        <p>
+                            평점: {{data[1].avg_rate}}
+                        </p>
+                        <p id="JPN">{{data[1].category}}</p><br>
+						<div id="signiture_menu">
+						</div>
+						<p class="keyword">{{data[1].hashtag_category}}</p>
+						<div id="button">
+                        {% if session['id']%}
+                        <form method="POST">
+                            <a href="/EDdetail/{{data[1].name}}/{{session['id']}}/">more</a>
+                            <input type="hidden" name="user_name" value="{{session['id']}}">
+                        </form>
+                        {% else%}
+                            
+                            
+							<a href="/EDdetail_notLogin/{{data[1].name}}/">More</a>
+                         {% endif %}
+						</div>	
+					</div>	
+				</li>
+                {% endfor %}
+			</ul>
+		</div>
+  </aside>
+</body>
+</html>

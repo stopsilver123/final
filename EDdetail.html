@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>EATing Day</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/EDdetail.css') }}">
+	<script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+	<script src="{{ url_for('static', filename='js/EDdetail.js') }}"></script>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <style> *{font-family:'Jua', sans-serif;} </style>
+</head>	
+<body>
+<header>
+	<div class="header">
+		<div class="title">
+			<h1>EATing Day</h1>
+		</div>
+		{% if session['id']%}
+        <div class="user">
+                    
+            <p>{{session['id']}}</p><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0">
+        </div>
+            {% else%}
+        <div class="user">
+            <a href="/EDLogin"><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0"></a>
+        </div>
+        {% endif %}
+	</div>
+</header>
+<nav>
+<div class="topnav">
+	 <ul style="list-style-type:none;">
+            <li><a href="/EDhome"><i class="fa-solid fa-house fa-lg"></i></a></li>
+            <li><a href="/EDlist"><i class="fa-solid fa-list fa-lg"></i></a></li>
+            {% if session['id']%}
+            <li><a href="/EDonepick/{{session['id']}}/"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            {% else%}
+            <li><a href="/EDonepick"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            {% endif %}
+            <li><a href="/EDRegister"><i class="fa-solid fa-plus fa-lg"></i></a></li>
+        </ul>
+
+        <div class="navtext"><span style="font-size: 1.5em;"><b>맛집 세부화면</b></span></div>
+    {% if session['id'] %}
+            <button type="button" onclick="location.href = '/logout'" style="float: right; border-radius:10px">&nbsp로그아웃&nbsp</button>
+            {% endif %}
+</div>
+</nav>
+<div class="row">
+  
+  <div class="row middle1" style="width:100%;">
+	
+    <div style="float:left; width:250px">
+        <img src = "/{{data.img_path}}" border-radius:10px; max-width="200px" height="200px" style="border-radius:10px; position:relative; top:20px;">
+    </div>
+    
+    <div style="float:left; width:300px; padding-left:50px;">
+		<br>
+            <h2 style="font-size:30px;"><u>{{data.name}}</u><span style="font-size:18px; color:gray; font-weight:normal;">&nbsp&nbsp&nbsp{{data.category}}</span></h2>
+        <br><br><br><br>
+        <div>
+            <div style="width:150px; float:left;">
+			    <br>별점 : {{avg_rate}}<br>
+			    찜 수 {{data.heart_count}} / 리뷰 수 {{review_total}}건
+                <br>
+            </div>
+        <br>
+            {% block section %} <!--EDdatail_notLogin.html에 씀-->
+            <div style="float:left;">
+                {% if data_heart == "ON" %}
+                <img id ="heartIconOff" src = "https://cdn-icons-png.flaticon.com/512/833/833472.png" style="width:40px; display :inline-block;">
+                {% endif %}
+                {% if data_heart == "OFF" %}
+                <img id ="heartIconOff" src = "https://cdn-icons-png.flaticon.com/512/535/535285.png" style="width:40px; display :inline-block;">
+                {% endif %}
+                <!--<button id="heartButtonOn" onclick = "document.getElementById('heartIconOff').src='https://cdn-icons-png.flaticon.com/512/833/833472.png'">찜하기</button>
+                <button id="heartButtonOff" onclick = "document.getElementById('heartIconOff').src='https://cdn-icons-png.flaticon.com/512/535/535285.png'">찜 취소</button>-->
+            </div>
+            <div style="text-align: right;">
+                    <form action="/EDdetail/{{data.name}}/", method="POST">
+                        {% if session['id'] %}
+                        <input type="hidden" name="heart" value="ON">
+                        <input type="hidden" name="user_name" value="{{session['id']}}">
+                        {% endif %}
+                        <button id="heartButtonOn" onclick = "document.getElementById('heartIconOff').src='https://cdn-icons-png.flaticon.com/512/833/833472.png'" style="display :inline-block;">찜 하기</button>
+                    </form>
+                    <form action="/EDdetail/{{data.name}}/", method="POST">
+                        {% if session['id'] %}
+                        <input type="hidden" name="heart" value="OFF">
+                        <input type="hidden" name="user_name" value="{{session['id']}}">
+                        {% endif %}
+                        <button type="submit" id="heartButtonOff" onclick = "document.getElementById('heartIconOff').src='https://cdn-icons-png.flaticon.com/512/535/535285.png'" style="display :inline-block;">찜 취소</button>   
+                    </form>
+            </div>
+            {% endblock section %}
+        </div>
+
+    </div>
+      
+    <div style="float:left; width:150px; padding-top: 30px;">
+            <!--location.replace("/EDdetail/<data.name>/")-->
+			    
+	</div>
+          
+        
+	<div class = "mid" style="float:left; width:300px">
+		<ul style="line-height:30px; font-size:17px;">
+			<br>
+			<li><b>주소: {{data.Addr}}</b></li><br>
+			<li><b>전화번호: {{data.tel}}</b></li><br>
+			<li> <a href="/EDmoreinformation/{{data.name}}/"><b>더보기</b></a></li>
+		</ul>
+	</div>
+	<div class = "mid1" style="float:left; width:150px; padding-left:50px;">
+		<br><br><p>#해시태그</p>
+		<div class = "hashtag">
+			{{data.hashtag_category}}
+		</div>
+	</div>
+  </div>
+	
+  <div class="row middle2">
+    <button class="button" style = "background-color:#9CC5EB">&nbsp메뉴&nbsp</button>
+    <button type="button" onclick="location.href='/EDMoreMenu/{{data.name}}/'"name="moremenu" class="button" style = "font-size:12px; background-color:#C0C0C0; float:right;">&nbsp메뉴 더보기&nbsp</button>
+     
+	<br>
+	<div class = "menu">
+		<div class = "main">
+			<button class="button" style = "border-style:none; position:relative; left:10px; top:-50px;">&nbsp메인&nbsp</button>
+			<div class="MainMenu" style="position:relative; top:-35px;">
+                {% for data in data_main %}
+				<div style="float: left"><img src = "/{{data.img_path}}" width="80" height="80" style="border-radius:10px; padding:5px; vertical-align:middle;"></div>
+				<div style="float:left;">
+					<p style="white-space:normal; width:100px; font-size:14px; padding:5px; line-height:27px;">
+					<b>{{data.name}}</b><br>{{data.price}} 원<br>
+					</p>
+				</div>
+	
+				
+                {% endfor %}
+			</div>
+			
+			
+		</div>
+		<div class = "side">
+			<button class="button" style = "border-style:none; position:relative; left:20px; top:-50px;">&nbsp사이드&nbsp</button>
+			<div class = "SideMenu" style="position:relative; top:-35px;">
+                {% for data in data_side %}
+				<div style="float: left"><img src = "/{{data.img_path}}" width="80" height="80" style="border-radius:10px; padding:5px; vertical-align:middle;"></div>
+				<div style="float:left">
+					<p style="white-space:normal; width:100px; font-size:14px; padding:5px; line-height:27px;">
+					<b>{{data.name}}</b><br>{{data.price}} 원<br>
+					</p>
+				</div>
+				
+                {% endfor %}
+			</div>
+		</div>	
+	</div>
+  </div>
+  
+  <div class="row bottom">  
+    <button class="button" style = "background-color:#FFE4B5;">&nbsp리뷰&nbsp</button>
+	<button class="button" style = "border-style:none;">{{review_total}}건</button>
+    <button type="button" onclick="location.href='/EDMOREreview/{{data.name}}/'" name="morereview" class="button" style = "font-size:12px; background-color:#C0C0C0; float:right;">&nbsp리뷰 더보기&nbsp</button>
+
+      <div class="bot">
+        {% for data in data_review %}
+	  	<div class="review">
+			<img src="https://i.ibb.co/DfnrqF4/user.png" style="float:left; width:50px; height:50px; position:relative; left:4px; top:4px; bottom:4px;">
+			<p style="font-size:13px; text-align:center;  position:relative; top:2px; left:-25px;">{{data.writer}}님 <br>별점 : {{data.rating}}</p>
+			<p style="font-size:13px; text-align:center; position:relative; top:2px; left:-25px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 주문 메뉴 : {{data.foodname}}</p>
+		</div>
+		
+	    {% endfor %}
+      </div>
+  </div>
+</div>
+  
+</body>
+</html>

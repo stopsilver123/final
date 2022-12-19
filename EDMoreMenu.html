@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>EATing Day</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/EDMoreMenu.css') }}">
+<script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+    <style> *{font-family:'Jua', sans-serif;} </style>
+    
+</head>
+    
+
+<style> @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap'); </style>
+    
+<body>
+  
+
+<!-- Header-->
+<header>
+	<div class="header">
+		<div class="title">
+			<h1>EATing Day</h1>
+		</div>
+		{% if session['id']%}
+        <div class="user">
+                    
+            <p>{{session['id']}}</p><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0">
+        </div>
+            {% else%}
+        <div class="user">
+            <a href="/EDLogin"><img src="https://i.ibb.co/4NJ6F0t/user.png" alt="user" border="0"></a>
+        </div>
+        {% endif %}
+	</div>
+	
+</header>
+
+<nav>
+  <div class="topnav"  style="height:49px;">
+        <ul style="list-style-type:none;">
+            <li><a href="/EDhome"><i class="fa-solid fa-house fa-lg"></i></a></li>
+            <li><a href="/EDlist"><i class="fa-solid fa-list fa-lg"></i></a></li>
+            <li><a href="/EDonepick"><i class="fa-solid fa-heart fa-lg"></i></a></li>
+            <li><a href="/EDRegister"><i class="fa-solid fa-plus fa-lg"></i></a></li>
+        </ul>
+        <!--각자 맡은 화면 사이트 이름 넣기-->
+   <div class="navtext"><i class="fa-solid fa-list fa-lg"></i>&nbsp&nbsp<span style="font-size: 1.5em;"><b>메뉴 더보기</b></span></div>
+      {% if session['id'] %}
+            <button type="button" onclick="location.href = '/logout'" style="float: right; border-radius:10px">&nbsp로그아웃&nbsp</button>
+            {% endif %}
+  </div>
+    <button type="button" onclick="history.back(-1)" class="btm_more" id="more2" style="float: right;">돌아가기</button>
+</nav>
+
+
+<h3  style="text-align: center;">식당</h3>
+        {% if total > 0 %}
+  <button class="button" style = "background-color: #D8CDCD ; position:relative;padding:10px 50px 10px 50px; left:100px; margin-left:10px; top:-13px;">메인</button>
+   
+    <section>
+        <article>
+            <div class="list_wrap">
+                <ul>
+                    
+                    {% for data in dataM %}
+                   {{data.restaurant_name}} 
+                    
+                        <li class="item">
+                        <div class="image">
+                            <p>
+                                <img src="/{{data.img_path}}", width="100%" height="250px"><br><br>
+                            </p>
+                        </div>
+                            <br><br>
+                        <div class="contents">
+                                    
+						<h5><br><br><br>{{data.name}}<br></h5>
+                            
+                           <p>
+                               {{data.price}} 원<br><br>
+                               {{data.description}}<br><br>
+                               알레르기: {{data.allergy}}<br>
+                               {{data.foodhash}}<br>
+                               {{data.extra}}<br>
+                        </p>     
+                        </div>
+                    </li>
+                    
+                    {% endfor %}
+                </ul>  
+            </div>
+        </article>
+    </section><br><br><br>
+
+ <button class="button" style = "background-color: #D8CDCD; position:relative; padding:10px 50px 10px 50px; left:100px;  margin-left:10px; top:-13px;">사이드</button>
+    <section>
+        <article>
+            <div class="list_wrap">
+                <ul>
+                    {% for data in dataS %}
+                    {{data.restaurant_name}}
+                    <li class="item">
+                      
+                        <div class="image">
+                            <p>
+                                <img src="/{{data.img_path}}", width="100%" height="250px"><br>
+                            </p>
+                        </div>
+                        
+                        <br><br>
+                        <div class="contents">
+                                                             
+						<h5><br><br><br>{{data.name}}<br></h5>
+                            
+                           <p>
+                               {{data.price}}<br>
+                               {{data.description}}<br>
+                               {{data.allergy}}<br>
+                               {{data.foodhash}}<br>
+                               {{data.extra}}<br>
+                        </p>      
+                        </div>
+                          
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </article>
+    </section>
+      {% else %}
+    <div class="my_box">
+    <p>{{data2_restaurant_name}}   등록된 메뉴가 없습니다.</p> 
+    </div>
+    {% endif %}
+
+
+  
+      
+       {% if session['id']%}
+      <form method="post" action="/EDmenuRegister">
+          <input type="hidden" name="restaurantname" value="{{data_restname}}">
+  	    <button type="submit" onclick="location.href='/EDmenuRegister'" name="menuregister" class="btm_more" id="more1" 
+            style="border-style:'1';background-color:#FFE4B5; border-color:#ffffff;padding: 30px 100px 30px 100px; position:relative;  font-size:1.2em;
+                   left:550px; top:+50px; margin-bottom:100px">메뉴 추가하기</button>
+          
+         
+     
+    {% else %}
+      <button onclick="location.href='/EDLogin'" name="menuregister" class="btm_more" id="more1"  
+       style="border-style:'1';background-color:#FFE4B5; border-color:##808080 ; width: 30%; height:30px; position:relative; left:550px; top:+50px; margin-bottom:20px ">메뉴 추가하기<br>(로그인 후 가능합니다.)</button>
+       </form>
+    
+      {% endif %}
+ 
+</body>
+</html>

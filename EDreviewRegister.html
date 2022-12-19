@@ -1,0 +1,52 @@
+{% extends "EDmenuRegister.html" %}
+
+{% block nav %}
+  <div class="navtext"><i class="fa-solid fa-plus fa-lg"></i>&nbsp&nbsp<span style="font-size:1.5em;"><b> 리뷰 등록하기</b></span></div>
+{% endblock nav %}
+
+{% block content %}
+    <form name="frm" action="/EDMOREreview" method="post" enctype="multipart/form-data" >
+        <input type="hidden" name="restaurant_name" value="{{data.restaurant_name2}}"> 
+        
+        <table border="1" style="width:100%">
+            <tr><th><img src="https://i.ibb.co/GQCcV71/flower-deco.png" id="flowerfortable"><label for="restaurant_name"> 식당 명</label></th><td><span style="padding:25px;">{{data.restaurant_name2}}</span></td></tr>
+            <tr><th><img src="https://i.ibb.co/GQCcV71/flower-deco.png" id="flowerfortable"><label for="writer"> 작성자 </label></th><td><span style="padding:25px;">{{session['id']}}</span></td></tr>
+            <input type="hidden" name="writer" value="{{session['id']}}">
+            <tr><th><span style="color:red;">*&nbsp</span><img alt="flower img" src="https://i.ibb.co/GQCcV71/flower-deco.png" id="flowerfortable"><label for="foodname"> 메뉴 명</label></th>
+                <td><input type="text" id="foodname" name="foodname" access="false" required></td></tr>
+
+            <tr><th><img src="https://i.ibb.co/GQCcV71/flower-deco.png" id="flowerfortable"> <label for="photo"> 사진등록</label></th>
+                <td><input  style="margin:30px"  input type="file" access="false" multiple="false" id="photo" name="photo2"><img id="menupreview" src="" style="height: 60px; position: relative; text-align: center; vertical-align:middle;" /></td></tr>
+
+            <tr><th><span style="color:red;">*&nbsp</span><img alt="flower img" src="https://i.ibb.co/GQCcV71/flower-deco.png" id="flowerfortable"><label for="stars"> 평점</label></th>
+
+                <td style="padding:25px;">
+                    <fieldset>
+                        <input type="radio" name="rating" value="5" id="rate1" required><label for="rate1">⭐</label>
+                         <input type="radio" name="rating" value="4" id="rate2"><label for="rate2">⭐</label>
+                         <input type="radio" name="rating" value="3" id="rate3"><label for="rate3">⭐</label>
+                         <input type="radio" name="rating" value="2" id="rate4"><label for="rate4">⭐</label>
+                         <input type="radio" name="rating" value="1" id="rate5"><label for="rate5">⭐</label>
+                    </fieldset>
+                </td>
+            
+            </tr>
+
+            <tr><th><img alt="flower img" src="https://i.ibb.co/GQCcV71/flower-deco.png" id="flowerfortable"><label for="review"> 평가</label></th>
+                <td><textarea type="textarea" access="false" id="review" name="review"></textarea></td></tr>
+
+        </table>
+        <br><br><br><br>
+        <div align="center">
+            <input type="submit" value="등록" onclick="registrationYNreview()" id="reg">
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <input type="reset" value="취소" onclick="history.go(-1)" id="cancel"></div>
+        <br><br>
+</form>
+{% endblock content %}
+
+
+
+
+
+
